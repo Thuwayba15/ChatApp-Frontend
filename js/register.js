@@ -84,7 +84,7 @@ form.addEventListener('submit', (event) => {
     //Save to local storage
     saveUsers(users);
 
-    //Session storage
+    //Local storage
     localStorage.setItem(
         CURRENT_USER_KEY,
         String(newUser.id)
