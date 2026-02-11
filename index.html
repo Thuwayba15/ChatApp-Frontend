@@ -46,7 +46,7 @@
                 <!-- filter tabs -->
                 <div class="tabs" id="tabs">
                     <div class="filter-options">
-                        <button class="tab" type="button" id="all">All Chats</button>
+                        <button class="tab active" type="button" id="all">All Chats</button>
                         <button class="tab" type="button" id="groups">Groups</button>
                         <button class="tab" type="button" id="online">Online Users</button>
                     </div>
@@ -67,12 +67,30 @@
 
             <!-- right side chat section -->
             <main class="chat">
-                <section class="messages">
+                <section class="messages" id="messages">
                     <!-- add incoming and outgoing messages with time and member name for group -->
+
+                    <div class="msg-in">
+                        <div class="msg-sender">Username</div>
+                        <div class="msg-content"></div>
+                        <div class="msg-time"></div>
+                    </div>
+
+                    <div class="msg-out">
+                        <div class="msg-content"></div>
+                        <div class="msg-time"></div>
+                    </div>
                 </section>
 
                 <section class="input">
                     <!-- add message input and send button, B and I later -->
+                     <textarea class="msg-input" id="msg-input" placeholder="Message..." rows="10">
+
+                     </textarea>
+
+                     <button class="format-button" type="button">B</button>
+                     <button class="format-button" type="button">I</button>
+                     <button class="send-button" id="send-btn" type="button">➤</button>
                 </section>
             </main>
         </div>
