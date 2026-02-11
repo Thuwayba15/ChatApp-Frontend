@@ -1,8 +1,42 @@
 <!DOCTYPE html>
 <head>
-    <title>Chat-O Registration</title>
+    <title>Chat-O Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles/auth.css">
 </head>
 <body>
-    <h1>Registration Page</h1>
+    <main class="container">
+
+        <!-- Left side with logo -->
+        <section class="left">
+            <h1 class="logo">CHAT-O</h1>
+            <p class="slogan">Texting made better.</p>
+        </section>
+
+        <!-- Right side with login -->
+        <section class="right">
+            <div class="right-content">
+                <h2 class="welcome">Register to<br>Get Started</h2>
+
+                <form id="registerForm">
+                    <label class="details">Username</label>
+                    <input type="text" id="username" required placeholder="Enter your username">
+
+                    <label class="details">Email</label>
+                    <input type="email" id="email" required placeholder="Enter your email">
+
+                    <label class="details">Password</label>
+                    <input type="password" id="password" required placeholder="Enter your password">
+
+                    <button type="submit">Register</button>
+                    </form>
+            </div>
+
+            <p class="bottom-text">Already have an account? <a href="../pages/login.html">Login</a></p>
+            
+        </section>
+    </main>
+
+    <script src="../pages/register.html"></script>
 </body>
 </html>
