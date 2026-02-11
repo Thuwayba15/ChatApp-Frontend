@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #3f4370;
+    height: 100%;
+}
+
+.app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* top bar */
+.top {
+    background-color: #424874;
+    height: 60px;
+}
+
+/* bottom section */
+.bottom {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    min-height: 0;
+}
+
+/* left sidebar */
+.sidebar {
+    background-color: #323866;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.sidebar-title{
+    color: white;
+}
+
+.sidebar-search {
+    position: relative;
+}
+
+
+/* right chat section */
+.chat {
+    background-image:
+    linear-gradient(rgba(240, 242, 211, 0.9), rgba(240, 242, 211, 0.9)),
+    url('../assets/img/chat_background.avif');
+    background-size: cover;
+    background-color: #f0f2d3;
+}

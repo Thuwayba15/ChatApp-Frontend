@@ -1,8 +1,67 @@
 <!DOCTYPE html>
 <head>
     <title>Chat-O Messages</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/chat.css">
 </head>
 <body>
-    <h1>Messages Page</h1>
+    <!-- All components -->
+    <div class="app">
+        <!-- Top bar -->
+        <header class="top">
+            <!-- add logo, username, user pic, account button -->
+        </header>
+
+        <!--  side bar and chat section -->
+        <div class="bottom">
+
+            <!--  left sidebar -->
+            <aside class="sidebar">
+
+                <!-- messages and search -->
+                <div class="sidebar-header">
+                     <div class="sidebar-title">Messages</div>
+
+                     <div class="sidebar-search">
+                        <input type="search" placeholder="Search"/>
+                        <span class="search-icon"></span>
+                     </div>
+                </div>
+
+                <!-- filter tabs -->
+                <div class="tabs">
+                    <button class="tab" type="button">All Chats</button>
+                    <button class="tab" type="button">Groups</button>
+                    <button class="tab" type="button">Online Users</button>
+                    <button class="tab-group" type="button">+</button>
+                </div>
+
+                <!-- chat list section -->
+                <div class="chat-list">
+                    <!-- add users, profile pic, username, online (typing later), groups -->
+                     <button class="chat-list-item chat-list-item--active" type="button">
+                        <div class="chat-list-item-pic"></div>
+                        <div class="chat-list-item-info">
+                            <span class="chat-list-item-name">Friend</span>
+                            <span class="chat-list-item-badge">Online</span>
+                        </div>
+                </div>
+
+            </aside>
+
+            <!-- right side chat section -->
+            <main class="chat">
+                <section class="messages">
+                    <!-- add incoming and outgoing messages with time and member name for group -->
+                </section>
+
+                <section class="input">
+                    <!-- add message input and send button, B and I later -->
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="./js/chat.js"></script>
 </body>
 </html>
