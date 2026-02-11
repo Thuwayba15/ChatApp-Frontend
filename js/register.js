@@ -10,6 +10,9 @@ const USERS_KEY = 'chat-o.users';
 //Session storage key for current user
 const CURRENT_USER_KEY = 'chat-o.current-user';
 
+//ID management
+const NEXT_ID_KEY = 'chat-o.nextUserId';
+
 //Get users from local storage
 function loadUsers() {
     const raw = localStorage.getItem(USERS_KEY);
@@ -24,6 +27,14 @@ function loadUsers() {
 //Save users to local storage
 function saveUsers(users) {
     localStorage.setItem(USERS_KEY, JSON.stringify(users));
+}
+
+//Generate ID for new user
+function getNextUserId() {
+    const raw = localStorage.getItem(NEXT_ID_KEY);
+    const current = raw ? Number(raw) : 1;
+    localStorage.setItem(NEXT_ID_KEY, String(current + 1));
+    return current;
 }
 
 form.addEventListener('submit', (event) => {
@@ -61,6 +72,7 @@ form.addEventListener('submit', (event) => {
 
     //Create new user object
     const newUser = {
+        id: getNextUserId(),
         username: username,
         email: email,
         password: password,
@@ -75,8 +87,8 @@ form.addEventListener('submit', (event) => {
     //Session storage
     localStorage.setItem(
         CURRENT_USER_KEY,
-        JSON.stringify(newUser.username, newUser.email)
-    )
+        String(newUser.id)
+    );
 
     window.location.href = '../index.html';
 
