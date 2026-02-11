@@ -96,7 +96,13 @@ body {
     gap: 12px;
     min-height: 0;
     height: 100%;
-    overflow: hidden;
+    overflow: auto;
+}
+
+.sidebar-header {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
 
 .sidebar-title{
@@ -106,6 +112,122 @@ body {
 .sidebar-search {
     position: relative;
 }
+
+.sidebar-search input {
+    background-color: #f0f2d3; 
+    width: 100%;
+    height: 25px;
+    padding: 8px 30px 8px 10px;
+    border-radius: 20px;
+    border: none;
+}
+
+.search-icon {
+    position: absolute;
+    left: 85%;
+    top: 12%;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: #000000;
+    
+}
+
+/* tabs */
+.tabs {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+
+}
+
+.filter-options {
+    color: white;
+    background-color: black;
+    border-radius: 20%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    
+}
+
+.tab {
+    border: none;
+    background: transparent;
+    color: white;
+
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 20%;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.tab.active {
+    background-color: #322f2f;
+    color: white;
+}
+
+.tab-group {
+    background: transparent;
+    width: 50px;
+    height: 50px;
+    font-size: 40px;
+    color:rgb(240, 242, 211);
+    border: none;
+}
+
+/* people */
+
+.chat-list {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    padding: 5px;
+    gap: 10px;
+}
+
+.chat-list-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 250px;
+    background-color: #322f2f;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    height: 60px;
+}
+
+.chat-list-item-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    padding: 10px;
+}
+
+.chat-list-item-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 2px;
+    flex-direction: column;
+}
+
+.chat-list-item-name {
+    font-size: 19px;
+}
+
+.chat-list-item-badge {
+    font-size: 12px;
+    color: #64ff50;
+}
+
+.chat-list-empty {
+    color: white;
+}
+
 
 
 /* right chat section */
@@ -121,11 +243,6 @@ body {
 
     .top {
         grid-template-columns: 150px 1fr auto;
-    }
-
-    /* to make sidebar horizontal instead */
-    .bottom {
-        grid-template-columns: 100px auto;
     }
 
     .logo {
@@ -147,6 +264,17 @@ body {
         height: auto;
         max-height: 42vh;
         overflow: auto;
+        align-items: center;
+    }
+
+    .chat-list {
+        flex-direction: row;
+        overflow: auto;
+
+    }
+
+    .chat-list-item {
+        width: 150px;
     }
 
 
