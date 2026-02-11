@@ -10,6 +10,12 @@ body {
     height: 100%;
 }
 
+@font-face {
+    font-family: "Chicle";
+    src: url("../assets/fonts/Chicle-Regular.ttf") format("truetype");
+    font-style: normal;
+}
+
 .app {
     height: 100vh;
     display: flex;
@@ -19,14 +25,65 @@ body {
 /* top bar */
 .top {
     background-color: #424874;
-    height: 60px;
+    height: 80px;
+    color: white;
+    display: grid;
+    align-items: center;
+    padding: 0px 10px;
+    gap: 16px;
+    grid-template-columns: 300px 1fr auto;
+
+}
+
+.logo {
+    font-family: "Chicle";
+    font-size: 50px;
+    font-weight: 100;
+    color: #ffeb50;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+.user {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.user-pic {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.user-name {
+    font-size: 14px;
+}
+
+.user-status {
+    font-size: 12px;
+    color: #64ff50;
+}
+
+.account-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.account-pic{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
 
 /* bottom section */
 .bottom {
     flex: 1;
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 300px 1fr;
     min-height: 0;
 }
 
@@ -58,4 +115,40 @@ body {
     url('../assets/img/chat_background.avif');
     background-size: cover;
     background-color: #f0f2d3;
+}
+
+@media (max-width: 900px) {
+
+    .top {
+        grid-template-columns: 150px 1fr auto;
+    }
+
+    /* to make sidebar horizontal instead */
+    .bottom {
+        grid-template-columns: 100px auto;
+    }
+
+    .logo {
+    font-size: 40px;
+    }
+
+    .user {
+        align-items:flex-start;
+    }
+
+    .bottom {
+        /* collapses side-by-side columns into one */
+        grid-template-columns: 1fr; 
+        /* how vertical space is shared; the top element only takes up what it needs and the bottom stretches */
+        grid-template-rows: auto 1fr;
+    }
+
+    .sidebar {
+        height: auto;
+        max-height: 42vh;
+        overflow: auto;
+    }
+
+
+
 }
