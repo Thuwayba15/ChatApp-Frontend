@@ -76,6 +76,7 @@ form.addEventListener('submit', (event) => {
         username: username,
         email: email,
         password: password,
+        isOnline: false,
     }
 
     //Add to users list

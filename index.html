@@ -29,22 +29,27 @@
                 </div>
 
                 <!-- filter tabs -->
-                <div class="tabs">
-                    <button class="tab" type="button">All Chats</button>
-                    <button class="tab" type="button">Groups</button>
-                    <button class="tab" type="button">Online Users</button>
-                    <button class="tab-group" type="button">+</button>
+                <div class="tabs" id="tabs">
+                    <button class="tab" type="button" id="all">All Chats</button>
+                    <button class="tab" type="button" id="groups">Groups</button>
+                    <button class="tab" type="button" id="online">Online Users</button>
+                    <button class="tab-group" type="button" id="add">+</button>
                 </div>
 
                 <!-- chat list section -->
-                <div class="chat-list">
+                <div class="chat-list" id="chatList">
                     <!-- add users, profile pic, username, online (typing later), groups -->
-                     <button class="chat-list-item chat-list-item--active" type="button">
+                    <button class="chat-list-item" type="button">
                         <div class="chat-list-item-pic"></div>
                         <div class="chat-list-item-info">
                             <span class="chat-list-item-name">Friend</span>
                             <span class="chat-list-item-badge">Online</span>
                         </div>
+                    </button>
+                </div>
+
+                <div class="chat-list-empty" id="chatListEmpty" hidden>
+                    No users to show.
                 </div>
 
             </aside>
@@ -62,6 +67,6 @@
         </div>
     </div>
 
-    <script src="./js/chat.js"></script>
+    <script src="./js/sidebar.js"></script>
 </body>
 </html>
