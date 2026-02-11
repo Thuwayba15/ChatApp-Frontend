@@ -7,6 +7,12 @@ const chatList = document.getElementById('chatList');
 const empty = document.getElementById('chatListEmpty');
 const tabs = document.getElementById('tabs');
 
+//make sure only logged in users can see index
+const current = sessionStorage.getItem(CURRENT_USER_KEY);
+if(!current){
+    window.location.href = '../pages/login.html';
+}
+
 //Set default tab to be selected
 let activeTab = 'all';
 
