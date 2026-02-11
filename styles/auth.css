@@ -1,0 +1,135 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:sans-serif;
+}
+
+body {
+    background-color: #424874;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px;
+}
+
+@font-face {
+    font-family: "Chicle";
+    src: url("../assets/fonts/Chicle-Regular.ttf") format("truetype");
+    font-style: normal;
+}
+
+.container{
+    width: 100%;
+    max-width: 1600px;
+    min-height: 800px;
+    display: flex;
+    overflow: hidden;
+
+    background-color: white;
+    border-radius: 50px;
+}
+
+.left {
+    flex: 1;
+    background-color: #f0f2d3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 50px;
+}
+
+.right {
+    flex: 1;
+    background-color: #ffeb50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 64px 56px;
+    gap: 18px;
+}
+
+.right-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    font-family: "Chicle";
+    font-size: 120px;
+    font-weight: 100;
+    color: #424874;
+}
+
+.slogan{
+    color: #424874;
+    font-style: italic;
+    font-size: 30px;
+    margin-top: 0px;
+}
+
+.welcome {
+    font-size: 44px;
+    font-weight: 300;
+    align-self: flex-start;
+    margin-bottom: 8px;
+}
+
+#loginForm {
+    width: 320px;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 46px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 20px 0px;
+}
+
+#loginForm input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#loginForm button {
+    height: 34px;
+    border: none;
+    background-color: #424874;
+    color: white;
+}
+
+.bottom-text {
+    font-size:small;
+}
+
+@media (max-width: 900px){
+    .container {
+        flex-direction: column;
+        min-height: 800px;
+    }
+
+    .right{
+        padding: 40px 28px;
+    }
+
+    .left {
+        padding: 26px 24px;
+    }
+
+    .logo {
+        font-size : 56px;
+    }
+
+    .slogan {
+        font-size: 18px;
+    }
+
+    .welcome {
+        font-size: 36px;
+    }
+}
+
