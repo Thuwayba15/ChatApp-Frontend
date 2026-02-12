@@ -37,7 +37,7 @@ const getDirectChatId = (me, you) => {
   return existing ? existing.id : null;
 };
 
-//Store a message and update the parent timestamp for sorting.
+//Store a message and update the parent timestamp for sorting
 const sendMessage = (chatId, senderId, content) => {
   const messagesList = loadMessages();
   const chats = loadChats();

@@ -152,6 +152,6 @@ if (editIconButton && profilePicInput) {
   });
 }
 
-  // Initial render calls (after helpers are declared)
+  //Initial render calls
   renderCurrentUserName();
   renderCurrentUserIcon();
