@@ -25,6 +25,16 @@ const topUserName = document.getElementById('top-user-name');
 const topUserStatus = document.getElementById('top-user-status');
 const topUserPic = document.getElementById('top-user-pic');
 
+//Create group modal
+const groupModal = document.getElementById('groupModal');
+const groupNameInput = document.getElementById('groupName');
+const groupUserList = document.getElementById('groupUserList');
+const cancelGroupBtn = document.getElementById('cancelGroupBtn');
+const createGroupBtn = document.getElementById('createGroupBtn');
+
+//Track selected users
+let selectedGroupMemberIds = new Set();
+
 //make sure only logged in users can see index
 const current = sessionStorage.getItem(CURRENT_USER_KEY);
 if(!current){
@@ -59,6 +69,12 @@ function getCurrentUserId() {
 function setTopBar(name, statusText) {
     if (topUserName) topUserName.textContent = name;
     if (topUserStatus) topUserStatus.textContent = statusText;
+
+    if(statusText === 'Group' || activeChatId === null) {
+        topUserPic.style.display = 'none';
+    } else {
+        topUserPic.style.display = '';
+    }
 }
 
 //Chat functions
@@ -107,6 +123,20 @@ function getOrCreateChat(me, you){
     chats.push(chat);
     saveChats(chats);
     return chat;
+}
+
+//Get specific chat, helper function for showing active user
+function getDirectChatId(me, you) {
+    const chats = loadChats();
+
+    const existing = chats.find((c) => 
+        c.type === 'direct' &&
+        c.members.length === 2 &&
+        c.members.includes(me) &&
+        c.members.includes(you)
+    );
+
+    return existing ? existing.id : null;
 }
 
 //Message functions
@@ -245,11 +275,13 @@ function render() {
     chatList.innerHTML = '';
 
     let items = [];
+    const me = getCurrentUserId();
 
     if (activeTab === 'online') {
         items = getOnlineVisibleUsers().map((u) => ({
-        type: 'userPick',
-        user: u,
+            type: 'userPick',
+            user: u,
+            chatId: me === null ? null : getDirectChatId(me, u.id),
         }));
     } else if (activeTab === 'all') {
         items = getAllChatsSidebarItems();
@@ -268,6 +300,10 @@ function render() {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'chat-list-item';
+
+        if (item.type === 'group') {
+            button.classList.add('chat-list-item-group');
+        }
 
         const pic = document.createElement('div');
         pic.className = 'chat-list-item-pic';
@@ -306,6 +342,8 @@ function render() {
 
       button.addEventListener('click', () => {
         activeChatId = item.chatId;
+        setTopBar(item.title, 'Group');
+        render();
         renderMessages();
       });
     }
@@ -323,7 +361,7 @@ function render() {
 
         const chat = getOrCreateChat(me, user.id);
         activeChatId = chat.id;
-
+        setTopBar(user.username, 'Online');
         renderMessages();
         render(); 
       });
@@ -336,20 +374,139 @@ function render() {
     info.appendChild(name);
     info.appendChild(badge);
 
-    button.appendChild(pic);
+    if (item.type !== 'group') {
+        button.appendChild(pic);
+    }
     button.appendChild(info);
 
     chatList.appendChild(button);
   }
 }
 
+//Renders people
+function renderGroupUserList() {
+    console.log('renderGroupUserList called');
+    const me = getCurrentUserId();
+    
+    const users = loadUsers().filter((u) => u.id !== me);
+
+    groupUserList.innerHTML = '';
+
+    for (const user of users) {
+        const row = document.createElement('div');
+        row.className = 'modal-row';
+
+        const left = document.createElement('div');
+        left.className = 'modal-row-left';
+
+        const pic = document.createElement('div');
+        pic.className = 'modal-row-pic';
+
+        const name = document.createElement('div');
+        name.className = 'modal-row-name';
+        name.textContent = user.username;
+
+        left.appendChild(pic);
+        left.appendChild(name);
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'modal-row-btn';
+
+        const isSelected = selectedGroupMemberIds.has(user.id);
+        btn.textContent = isSelected ? 'Remove' : 'Add';
+        if (isSelected) btn.classList.add('modal-row-btn-remove');
+
+        btn.addEventListener('click', () => {
+        if (selectedGroupMemberIds.has(user.id)) {
+            selectedGroupMemberIds.delete(user.id);
+        } else {
+            selectedGroupMemberIds.add(user.id);
+        }
+        renderGroupUserList();
+        });
+
+        row.appendChild(left);
+        row.appendChild(btn);
+
+        groupUserList.appendChild(row);
+    }
+}
+
+function createGroupChat(title, memberIds) {
+    const chats = loadChats();
+
+    const chat = {
+        id: getNextChatId(),
+        type: 'group',
+        title,
+        members: memberIds,
+        timeStamp: Date.now(),
+    };
+
+    chats.push(chat);
+    saveChats(chats);
+
+    return chat;
+}
+
+createGroupBtn.addEventListener('click', () => {
+    const me = getCurrentUserId();
+    if (me === null) return;
+
+    const title = groupNameInput.value.trim();
+    if (!title) {
+        alert('Please enter a group name');
+        return;
+    }
+
+    // members = me + selected users
+    const members = [me, ...Array.from(selectedGroupMemberIds)];
+
+    if (members.length < 3) {
+        alert('Add at least 2 other people to create a group');
+        return;
+    }
+
+    const groupChat = createGroupChat(title, members);
+
+    activeChatId = groupChat.id;
+
+    closeGroupModal();
+    render();
+    renderMessages();
+});
+
+
+//Functions to open and close modals when a group is created
+function openGroupModal() {
+
+    console.log('openGroupModal called');
+  console.log('renderGroupUserList exists?', typeof renderGroupUserList);
+    selectedGroupMemberIds = new Set();
+    groupNameInput.value = '';
+    groupModal.hidden = false;
+    renderGroupUserList();
+}
+
+function closeGroupModal() {
+    groupModal.hidden = true;
+}
+
+cancelGroupBtn.addEventListener('click', () => {
+    console.log('Cancel clicked');
+    closeGroupModal();
+});
+
 //Handle switching between tabs, detects which is clicked and sets active class, calls render
 tabs.addEventListener('click', (event) => {
     const clicked = event.target.closest('button');
     if(!clicked) return;
 
-    //COME BACK
-    if(clicked.id === 'add') return;
+    if(clicked.id === 'add') {
+        openGroupModal();
+        return;
+    }
 
     if (clicked.id !== "all" && clicked.id !== "groups" && clicked.id !== "online") {
         return;
@@ -393,7 +550,7 @@ window.addEventListener('storage', (event) => {
 //Initial setup for first render
 function init(){
     const defaultTab = document.getElementById('active');
-    
+    topUserPic.style.display = 'none';
     render();
     renderMessages();
 }
