@@ -2,10 +2,43 @@
     <head>
         <title>Chat-O Account Settings</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="../styles/account-settings.css">
     </head>
     <body>
-        <h1>Account Settings Page</h1>
-        <button id="logoutButton" type="button">Logout</button>
+        <main class="page">
+            <h2>User Settings</h2>
+
+            <section class="content">
+                <div class="avatar-wrap">
+                    <div class="avatar">
+                        <div class="user-icon" id="userIcon"></div>
+                    </div>
+
+                    <div class="edit-icon">
+                        <button id="editIcon" type="button">Edit</button>
+                        <input id="profilePicInput" type="file" accept="image/*" hidden />
+                    </div>
+                </div>
+
+            <div class="name-row">
+                <div class="label" id="userName"></div>
+                <div class="row-edit">
+                    <button id="editName" type="button">
+
+                    </button>
+                </div>
+            </div>
+
+            <button id="logoutButton" type="button">Logout</button>
+
+            </section>
+
+            <div class="bottom-actions">
+                <button id="cancel-button" class="cancel-button" type="button">Cancel</button>
+                <button id="save-button" class="save-button" type="button">Confirm</button>
+            </div>
+        </main>
+        
         <script src="../js/account-settings.js"></script>
     </body>
 </html>
