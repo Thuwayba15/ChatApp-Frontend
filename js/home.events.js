@@ -72,6 +72,11 @@ const handleSendMessage = () => {
 
   const content = msgInput ? msgInput.value.trim() : '';
 
+  if (!content) {
+    alert('Cannot send an empty message');
+    return;
+  }
+
   if (activeChatId === null) {
     alert('No chat selected');
     return;
