@@ -36,6 +36,13 @@ const createGroupBtn = document.getElementById('createGroupBtn');
 let selectedGroupMemberIds = new Set();
 const accountPic = document.getElementById('account-pic');
 
+// Search inputs
+const sidebarSearchInput = document.getElementById('sidebarSearchInput');
+const modalSearchInput = document.getElementById('modalSearchInput');
+
+let sidebarSearchQuery = '';
+let modalSearchQuery = '';
+
 //Set default tab to be selected
 let activeTab = 'all';
 //Keep track of chat that is currently open
@@ -308,6 +315,20 @@ function render() {
         items = getAllChatsSidebarItems().filter((i) => i.type === "group");
     }
 
+    // Apply search filter
+    if (sidebarSearchQuery) {
+        const q = sidebarSearchQuery.toLowerCase();
+        items = items.filter((item) => {
+            if (item.type === 'direct' || item.type === 'userPick') {
+                return (item.user?.username || '').toLowerCase().includes(q);
+            }
+            if (item.type === 'group') {
+                return (item.title || '').toLowerCase().includes(q);
+            }
+            return false;
+        });
+    }
+
     if (items.length === 0) {
         empty.hidden = false;
         return;
@@ -427,7 +448,13 @@ function renderGroupUserList() {
     console.log('renderGroupUserList called');
     const me = getCurrentUserId();
     
-    const users = loadUsers().filter((u) => u.id !== me);
+    let users = loadUsers().filter((u) => u.id !== me);
+
+    // Apply modal search filter
+    if (modalSearchQuery) {
+        const q = modalSearchQuery.toLowerCase();
+        users = users.filter((u) => (u.username || '').toLowerCase().includes(q));
+    }
 
     groupUserList.innerHTML = '';
 
@@ -586,6 +613,22 @@ window.addEventListener('storage', (event) => {
     renderMessages();
   }
 });
+
+// Sidebar search functionality
+if (sidebarSearchInput) {
+    sidebarSearchInput.addEventListener('input', (e) => {
+        sidebarSearchQuery = e.target.value.trim().toLowerCase();
+        render();
+    });
+}
+
+// Modal search functionality
+if (modalSearchInput) {
+    modalSearchInput.addEventListener('input', (e) => {
+        modalSearchQuery = e.target.value.trim().toLowerCase();
+        renderGroupUserList();
+    });
+}
 
 //Initial setup for first render
 function init(){
