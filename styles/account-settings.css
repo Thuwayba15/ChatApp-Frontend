@@ -127,7 +127,6 @@ h2 {
   border: 2px solid #ffeb50;
   background: transparent;
   color: #ffeb50;
-  cursor: pointer;
   font-size: 12px;
   padding: 0 8px;
 }
@@ -156,7 +155,6 @@ h2 {
     padding: 0 18px;
     border-radius: 6px;
     border: none;
-    cursor: pointer;
     font-size: 12px;
     background-color:#f0f2d3;
 }

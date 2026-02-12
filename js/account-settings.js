@@ -37,9 +37,6 @@ const renderCurrentUserIcon = () => {
   }
 };
 
-renderCurrentUserName();
-renderCurrentUserIcon();
-
 const current = sessionStorage.getItem(CURRENT_USER_KEY);
 if(!current){
     window.location.href = '../pages/login.html';
@@ -65,7 +62,8 @@ const getCurrentUserId = () => {
 };
 
 //Handle logout, mark user offline, clear session state
-logoutButton.addEventListener('click', () => {
+if (logoutButton) {
+  logoutButton.addEventListener('click', () => {
     const users = loadUsers();
     const me = getCurrentUserId();
     const user = users.find((u) =>
@@ -77,7 +75,8 @@ logoutButton.addEventListener('click', () => {
     }
     sessionStorage.removeItem(CURRENT_USER_KEY);
     window.location.href = '../pages/login.html';
-})
+  });
+}
 
 
 //Allow username edits
@@ -152,3 +151,7 @@ if (editIconButton && profilePicInput) {
     reader.readAsDataURL(file);
   });
 }
+
+  // Initial render calls (after helpers are declared)
+  renderCurrentUserName();
+  renderCurrentUserIcon();

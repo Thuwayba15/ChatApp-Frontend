@@ -42,3 +42,8 @@ let modalSearchQuery = '';
 // UI state.
 let activeTab = 'all';
 let activeChatId = null;
+
+const _current = sessionStorage.getItem(CURRENT_USER_KEY);
+if (!_current) {
+	window.location.href = './login.html';
+}
