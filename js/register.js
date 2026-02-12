@@ -105,7 +105,7 @@ form.addEventListener('submit', (event) => {
         String(newUser.id)
     );
 
-    window.location.href = '../pages/login.html';
+    window.location.href = '../index.html';
 
 })
 

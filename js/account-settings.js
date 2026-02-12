@@ -39,7 +39,7 @@ const renderCurrentUserIcon = () => {
 
 const current = sessionStorage.getItem(CURRENT_USER_KEY);
 if(!current){
-    window.location.href = '../pages/login.html';
+    window.location.href = '../index.html';
 }
 
 const logoutButton = document.getElementById('logoutButton');
@@ -74,7 +74,7 @@ if (logoutButton) {
         saveUsers(users);
     }
     sessionStorage.removeItem(CURRENT_USER_KEY);
-    window.location.href = '../pages/login.html';
+    window.location.href = '../index.html';
   });
 }
 

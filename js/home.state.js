@@ -45,5 +45,5 @@ let activeChatId = null;
 
 const _current = sessionStorage.getItem(CURRENT_USER_KEY);
 if (!_current) {
-	window.location.href = './login.html';
+	window.location.href = '../index.html';
 }
