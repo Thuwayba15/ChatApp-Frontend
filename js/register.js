@@ -18,10 +18,8 @@ function hashPassword(password) {
     return hash.toString(36);
 }
 
-//Session storage key for current user
 const CURRENT_USER_KEY = 'chat-o.current-user';
 
-//ID management
 const NEXT_ID_KEY = 'chat-o.nextUserId';
 
 //Get users from local storage
@@ -35,7 +33,6 @@ function loadUsers() {
     return JSON.parse(raw);
 }
 
-//Save users to local storage
 function saveUsers(users) {
     localStorage.setItem(USERS_KEY, JSON.stringify(users));
 }
@@ -99,19 +96,16 @@ form.addEventListener('submit', (event) => {
         profilePic: '',
     }
 
-    //Add to users list
     users.push(newUser);
 
-    //Save to local storage
     saveUsers(users);
 
-    //Local storage
     localStorage.setItem(
         CURRENT_USER_KEY,
         String(newUser.id)
     );
 
-    window.location.href = '../pages/login.html';
+    window.location.href = '../index.html';
 
 })
 

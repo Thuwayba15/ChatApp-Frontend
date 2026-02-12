@@ -1,122 +1,38 @@
 <!DOCTYPE html>
 <head>
-    <title>Chat-O Messages</title>
+    <title>Chat-O Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./styles/chat.css">
+    <link rel="stylesheet" href="./styles/auth.css">
 </head>
 <body>
-    <!-- All components -->
-    <div class="app">
-        <!-- Top bar -->
-        <header class="top">
-            <!-- logo, username, user pic, account button -->
-             <div class="logo">CHAT-O</div>
+    <main class="container">
 
-             <div class="user">
-                <div class="user-pic" id="top-user-pic"></div>
+        <!-- Left side with logo -->
+        <section class="left">
+            <h1 class="logo">CHAT-O</h1>
+            <p class="slogan">Texting made better.</p>
+        </section>
 
-                <div class="user-info">
-                    <div class="user-name" id="top-user-name"></div>
-                    <div class="user-status" id="top-user-status"></div>
-                </div>
+        <!-- Right side with login -->
+        <section class="right">
+            <div class="right-content">
+                <h2 class="welcome">Welcome<br>Back</h2>
+
+                <form id="loginForm">
+                    <label class="details">Email</label>
+                    <input type="email" id="email" required placeholder="Enter your email">
+
+                    <label class="details">Password</label>
+                    <input type="password" id="password" required placeholder="Enter your password">
+
+                    <button type="submit">Sign in</button>
+                    </form>
              </div>
+            <p class="bottom-text">Don't have an account? <a href="./pages/register.html">Register</a></p>
+           
+        </section>
+    </main>
 
-                 <a class="account-button" href="./pages/account-settings.html">
-                     <span class="account-pic" id="account-pic"></span>
-                 </a>
-             
-        </header>
-
-        <!--  side bar and chat section -->
-        <div class="bottom">
-
-            <!--  left sidebar -->
-            <aside class="sidebar">
-
-                <!-- messages and search -->
-                <div class="sidebar-header">
-                     <div class="sidebar-title">Messages</div>
-
-                     <div class="sidebar-search">
-                        <input type="search" placeholder="Search"/>
-                        <span class="search-icon"></span>
-                     </div>
-                </div>
-
-                <!-- filter tabs -->
-                <div class="tabs" id="tabs">
-                    <div class="filter-options">
-                        <button class="tab active" type="button" id="all">All Chats</button>
-                        <button class="tab" type="button" id="groups">Groups</button>
-                        <button class="tab" type="button" id="online">Online Users</button>
-                    </div>
-                    <button class="tab-group" type="button" id="add">+</button>
-                </div>
-
-                <!-- chat list section -->
-                <div class="chat-list" id="chatList">
-                    <!-- users, profile pic, username, online (typing later), groups -->
-                    
-                </div>
-
-                <div class="chat-list-empty" id="chatListEmpty" hidden>
-                    No users to show.
-                </div>
-
-            </aside>
-
-            <!-- right side chat section -->
-            <main class="chat">
-                <section class="messages" id="messages">
-                    <!-- incoming and outgoing messages with time and member name for group -->
-                </section>
-
-                <section class="input">
-                    <!-- add message input and send button, B and I later -->
-                     <textarea class="msg-input" id="msg-input" placeholder="Message..." rows="1"></textarea>
-
-                     <button class="format-button" type="button">B</button>
-                     <button class="format-button" type="button">I</button>
-                     <button class="send-button" id="send-btn" type="button">➤</button>
-                </section>
-            </main>
-        </div>
-    </div>
-
-    <!-- Create group overlay -->
-     <div class="modal-overlay" id="groupModal" hidden>
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">Select Users</h2>
-            </div>
-
-            <div class="modal-groupname">
-                <label class="modal-label" for="groupName">Group Name</label>
-                <input id="groupName" class="modal-input" type="text" placeholder="Enter group name"/>
-            </div>
-
-            <div class="modal-controls">
-                <div class="modal-tabs">
-                    <button class="modal-tab active" type="button" id="modal-all">All Users</button>
-                </div>
-
-                <div class="modal-search">
-                    <input type="search" placeholder="Search"/>
-                    <span class="search-icon"></span>
-                </div>
-            </div>
-
-            <div class="modal-user-list" id="groupUserList">
-                <!-- list of users -->
-            </div>
-
-            <div class="modal-footer">
-                <button class="modal-button" id="cancelGroupBtn" type="button">Cancel</button>
-                <button class="modal-button" id="createGroupBtn" type="button">Create Group</button>  
-            </div>    
-        </div>
-     </div>
-
-    <script src="./js/sidebar.js"></script>
+    <script src="./js/login.js"></script>
 </body>
 </html>
