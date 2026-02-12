@@ -76,5 +76,5 @@ form.addEventListener('submit', (event) => {
     sessionStorage.setItem(CURRENT_USER_KEY, String(matchedUser.id));
 
     //Go to home page
-    window.location.href = '../index.html';
+    window.location.href = '../pages/home.html';
 })
