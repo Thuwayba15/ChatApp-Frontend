@@ -129,17 +129,6 @@ body {
     border: none;
 }
 
-.search-icon {
-    position: absolute;
-    left: 85%;
-    top: 12%;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    background-color: #000000;
-    
-}
-
 /* tabs */
 .tabs {
     display: flex;
@@ -467,16 +456,6 @@ body {
     padding: 8px 30px 8px 10px;
     border-radius: 20px;
     border: none;
-}
-
-.search-icon {
-    position: absolute;
-    left: 85%;
-    top: 12%;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    background-color: #000000;
 }
 
 /* User list area */

@@ -1,5 +1,3 @@
-//Log out functionality
-
 const CURRENT_USER_KEY = 'chat-o.current-user';
 const USERS_KEY = 'chat-o.users';
 
@@ -10,7 +8,8 @@ const userIcon = document.getElementById('userIcon');
 const editIconButton = document.getElementById('editIcon');
 const profilePicInput = document.getElementById('profilePicInput');
 
-function renderCurrentUserName() {
+//Populate the username input with the current user's name from storage
+const renderCurrentUserName = () => {
   const me = getCurrentUserId();
   if (me === null) return;
 
@@ -20,9 +19,10 @@ function renderCurrentUserName() {
   if (!user || !userNameInput) return;
 
   userNameInput.value = user.username; 
-}
+};
 
-function renderCurrentUserIcon() {
+//Apply the current user's pic to the UI if one is saved
+const renderCurrentUserIcon = () => {
   const me = getCurrentUserId();
   if (me === null || !userIcon) return;
 
@@ -35,7 +35,7 @@ function renderCurrentUserIcon() {
   } else {
     userIcon.style.backgroundImage = '';
   }
-}
+};
 
 renderCurrentUserName();
 renderCurrentUserIcon();
@@ -47,24 +47,25 @@ if(!current){
 
 const logoutButton = document.getElementById('logoutButton');
 
-function loadUsers() {
+const loadUsers = () => {
   const raw = localStorage.getItem(USERS_KEY);
   if (!raw) return [];
   return JSON.parse(raw);
-}
+};
 
-function saveUsers(users) {
+
+const saveUsers = (users) => {
   localStorage.setItem(USERS_KEY, JSON.stringify(users));
-}
+};
 
-function getCurrentUserId() {
+const getCurrentUserId = () => {
   const raw = sessionStorage.getItem(CURRENT_USER_KEY);
   if (!raw) return null;
   return Number(raw);
-}
+};
 
+//Handle logout, mark user offline, clear session state
 logoutButton.addEventListener('click', () => {
-    //Find current user and make them offline
     const users = loadUsers();
     const me = getCurrentUserId();
     const user = users.find((u) =>
@@ -79,7 +80,7 @@ logoutButton.addEventListener('click', () => {
 })
 
 
-
+//Allow username edits
 if (editNameButton && userNameInput) {
   editNameButton.addEventListener('click', () => {
     userNameInput.readOnly = false;
@@ -120,6 +121,7 @@ if (doneButton) {
 }
 
 if (editIconButton && profilePicInput) {
+  //File picker
   editIconButton.addEventListener('click', () => {
     profilePicInput.click();
   });

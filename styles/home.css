@@ -129,17 +129,6 @@ body {
     border: none;
 }
 
-.search-icon {
-    position: absolute;
-    left: 85%;
-    top: 12%;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    background-color: #000000;
-    
-}
-
 /* tabs */
 .tabs {
     display: flex;
@@ -469,16 +458,6 @@ body {
     border: none;
 }
 
-.search-icon {
-    position: absolute;
-    left: 85%;
-    top: 12%;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    background-color: #000000;
-}
-
 /* User list area */
 .modal-list {
     flex: 1;
@@ -511,6 +490,9 @@ body {
     height: 36px;
     border-radius: 50%;
     background: white;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .modal-row-name {
