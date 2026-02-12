@@ -7,6 +7,17 @@ const passwordInput = document.getElementById('password');
 //For storing users as JSON
 const USERS_KEY = 'chat-o.users';
 
+//Simple password hashing function
+function hashPassword(password) {
+    let hash = 0;
+    for (let i = 0; i < password.length; i++) {
+        const char = password.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; 
+    }
+    return hash.toString(36);
+}
+
 //Session storage key for current user
 const CURRENT_USER_KEY = 'chat-o.current-user';
 
@@ -83,7 +94,7 @@ form.addEventListener('submit', (event) => {
         id: getNextUserId(),
         username: username,
         email: email,
-        password: password,
+        password: hashPassword(password),
         isOnline: false,
     }
 

@@ -7,6 +7,17 @@ const USERS_KEY = 'chat-o.users';
 
 const CURRENT_USER_KEY = 'chat-o.current-user';
 
+//Simple password hashing function (taken from) https://stackoverflow.com/questions/6122571/simple-non-secure-hash-function-for-javascript
+function hashPassword(password) {
+    let hash = 0;
+    for (let i = 0; i < password.length; i++) {
+        const char = password.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; 
+    }
+    return hash.toString(36);
+}
+
 //Main idea: 
 // Load users from local storage
 // Take input (normalized for proper checking)
@@ -51,7 +62,7 @@ form.addEventListener('submit', (event) => {
     }
 
     //Once email is matched, check password
-    if(matchedUser.password !== password){
+    if(matchedUser.password !== hashPassword(password)){
         alert('Incorrect password');
         return;
     }
