@@ -119,6 +119,20 @@ function getOrCreateChat(me, you){
     return chat;
 }
 
+//Get specific chat, helper function for showing active user
+function getDirectChatId(me, you) {
+    const chats = loadChats();
+
+    const existing = chats.find((c) => 
+        c.type === 'direct' &&
+        c.members.length === 2 &&
+        c.members.includes(me) &&
+        c.members.includes(you)
+    );
+
+    return existing ? existing.id : null;
+}
+
 //Message functions
 
 //Load and return messages from local storage
@@ -255,11 +269,13 @@ function render() {
     chatList.innerHTML = '';
 
     let items = [];
+    const me = getCurrentUserId();
 
     if (activeTab === 'online') {
         items = getOnlineVisibleUsers().map((u) => ({
-        type: 'userPick',
-        user: u,
+            type: 'userPick',
+            user: u,
+            chatId: me === null ? null : getDirectChatId(me, u.id),
         }));
     } else if (activeTab === 'all') {
         items = getAllChatsSidebarItems();
@@ -278,6 +294,10 @@ function render() {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'chat-list-item';
+
+        if (item.type === 'group') {
+            button.classList.add('chat-list-item-group');
+        }
 
         const pic = document.createElement('div');
         pic.className = 'chat-list-item-pic';
@@ -335,7 +355,7 @@ function render() {
 
         const chat = getOrCreateChat(me, user.id);
         activeChatId = chat.id;
-
+        setTopBar(user.username, 'Online');
         renderMessages();
         render(); 
       });
@@ -348,7 +368,9 @@ function render() {
     info.appendChild(name);
     info.appendChild(badge);
 
-    button.appendChild(pic);
+    if (item.type !== 'group') {
+        button.appendChild(pic);
+    }
     button.appendChild(info);
 
     chatList.appendChild(button);

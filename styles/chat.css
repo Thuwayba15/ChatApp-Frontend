@@ -42,7 +42,6 @@ body {
     color: #ffeb50;
     display: flex;
     align-items: center;
-    /* justify-content: center; */
 }
 
 .user {
@@ -96,7 +95,7 @@ body {
     gap: 12px;
     min-height: 0;
     height: 100%;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .sidebar-header {
@@ -183,6 +182,8 @@ body {
 .chat-list {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-height: 0;
     overflow: auto;
     padding: 5px;
     gap: 10px;
@@ -238,6 +239,14 @@ body {
 .chat-list-item-active {
     background-color: #514e4e;
     color: white;
+}
+
+.chat-list-item-group .chat-list-item-pic {
+    display: none;
+}
+
+.chat-list-item-group {
+    padding-left: 12px;
 }
 
 
@@ -372,7 +381,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    overflow: auto;
+    max-height: 80vh;
+    overflow: hidden;
 }
 
 .modal-title {
@@ -470,6 +480,7 @@ body {
 /* Each row */
 .modal-user-list {
     flex: 1;
+    min-height: 0;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
