@@ -20,6 +20,11 @@ const messages = document.getElementById('messages');
 const msgInput = document.getElementById('msg-input');
 const sendBtn = document.getElementById('send-btn');
 
+//User we are chatting to
+const topUserName = document.getElementById('top-user-name');
+const topUserStatus = document.getElementById('top-user-status');
+const topUserPic = document.getElementById('top-user-pic');
+
 //make sure only logged in users can see index
 const current = sessionStorage.getItem(CURRENT_USER_KEY);
 if(!current){
@@ -50,9 +55,15 @@ function getCurrentUserId() {
   return Number(raw);
 }
 
+//Set the name and status of the person we are chatting to
+function setTopBar(name, statusText) {
+    if (topUserName) topUserName.textContent = name;
+    if (topUserStatus) topUserStatus.textContent = statusText;
+}
+
 //Chat functions
 
-//Load and return chats from local storage
+//Load and return chats from local storagef
 function loadChats() {
     const raw = localStorage.getItem(CHATS_KEY);
     if (!raw) return [];
@@ -283,6 +294,8 @@ function render() {
 
         button.addEventListener('click', () => {
             activeChatId = item.chatId;
+            setTopBar(item.user.username, item.user.isOnline ? 'Online' : 'Offline');
+            render();
             renderMessages();
       });
     }
@@ -314,6 +327,10 @@ function render() {
         renderMessages();
         render(); 
       });
+    }
+
+    if (item.chatId && item.chatId === activeChatId) {
+        button.classList.add('chat-list-item-active');
     }
 
     info.appendChild(name);
