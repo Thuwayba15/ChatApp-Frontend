@@ -7,8 +7,8 @@ const USERS_KEY = 'chat-o.users';
 
 const CURRENT_USER_KEY = 'chat-o.current-user';
 
-//Simple password hashing function (taken from) https://stackoverflow.com/questions/6122571/simple-non-secure-hash-function-for-javascript
-function hashPassword(password) {
+//Simple hash function 
+const hashPassword = (password) => {
     let hash = 0;
     for (let i = 0; i < password.length; i++) {
         const char = password.charCodeAt(i);
@@ -16,7 +16,7 @@ function hashPassword(password) {
         hash = hash & hash; 
     }
     return hash.toString(36);
-}
+};
 
 //Main idea: 
 // Load users from local storage
@@ -25,33 +25,31 @@ function hashPassword(password) {
 // Save current user id to local storage
 // Go to home page
 
-function loadUsers() {
+const loadUsers = () => {
     const raw = localStorage.getItem(USERS_KEY);
     if (!raw) return [];
     return JSON.parse(raw);
-}
+};
 
 //Save users to local storage
-function saveUsers(users) {
+const saveUsers = (users) => {
     localStorage.setItem(USERS_KEY, JSON.stringify(users));
-}
+};
 
+//Validate login input, authenticate the user, start a session
 form.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const email = emailInput.value.trim().toLowerCase();
     const password = passwordInput.value;
 
-    //Vaidation
     if(!email || !password){
         alert('Please enter your email and password');
         return
     }
 
-    //Get list from local storage
     const users = loadUsers();
 
-    //Find matching user with email
     const matchedUser = users.find((user) => 
         user.email === email
     );
@@ -71,10 +69,8 @@ form.addEventListener('submit', (event) => {
     matchedUser.isOnline = true;
     console.log(matchedUser);
     saveUsers(users);
-
-    //Session storage
+    
     sessionStorage.setItem(CURRENT_USER_KEY, String(matchedUser.id));
 
-    //Go to home page
-    window.location.href = '../index.html';
+    window.location.href = '../pages/home.html';
 })
