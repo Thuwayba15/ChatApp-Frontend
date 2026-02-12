@@ -24,12 +24,7 @@ const sendBtn = document.getElementById('send-btn');
 const topUserName = document.getElementById('top-user-name');
 const topUserStatus = document.getElementById('top-user-status');
 const topUserPic = document.getElementById('top-user-pic');
-
-//make sure only logged in users can see index
-const current = sessionStorage.getItem(CURRENT_USER_KEY);
-if(!current){
-    window.location.href = '/ChatApp-Frontend/pages/login.html';
-}
+const accountPic = document.getElementById('account-pic');
 
 //Set default tab to be selected
 let activeTab = 'all';
@@ -55,10 +50,40 @@ function getCurrentUserId() {
   return Number(raw);
 }
 
+function getUserById(userId) {
+    const users = loadUsers();
+    return users.find((u) => u.id === userId) || null;
+}
+
+function renderAccountPic() {
+    if (!accountPic) return;
+
+    const me = getCurrentUserId();
+    if (me === null) {
+        accountPic.style.backgroundImage = '';
+        return;
+    }
+
+    const user = getUserById(me);
+    accountPic.style.backgroundImage = user?.profilePic ? `url("${user.profilePic}")` : '';
+}
+
 //Set the name and status of the person we are chatting to
-function setTopBar(name, statusText) {
+function setTopBar(name, statusText, userId, isGroup) {
     if (topUserName) topUserName.textContent = name;
     if (topUserStatus) topUserStatus.textContent = statusText;
+
+    if (!topUserPic) return;
+
+    if (isGroup || !userId) {
+        topUserPic.style.display = 'none';
+        topUserPic.style.backgroundImage = '';
+        return;
+    }
+
+    const user = getUserById(userId);
+    topUserPic.style.display = '';
+    topUserPic.style.backgroundImage = user?.profilePic ? `url("${user.profilePic}")` : '';
 }
 
 //Chat functions
@@ -292,9 +317,17 @@ function render() {
             badge.classList.add('badge-offline'); 
         }
 
+        if (item.user.profilePic) {
+            pic.style.backgroundImage = `url("${item.user.profilePic}")`;
+            pic.style.backgroundSize = 'cover';
+            pic.style.backgroundPosition = 'center';
+        } else {
+            pic.style.backgroundImage = '';
+        }
+
         button.addEventListener('click', () => {
             activeChatId = item.chatId;
-            setTopBar(item.user.username, item.user.isOnline ? 'Online' : 'Offline');
+            setTopBar(item.user.username, item.user.isOnline ? 'Online' : 'Offline', item.user.id, false);
             render();
             renderMessages();
       });
@@ -306,6 +339,7 @@ function render() {
 
       button.addEventListener('click', () => {
         activeChatId = item.chatId;
+        setTopBar(item.title, 'Group', null, true);
         renderMessages();
       });
     }
@@ -317,13 +351,21 @@ function render() {
       badge.textContent = 'Online';
       badge.classList.add('badge-online');
 
+            if (user.profilePic) {
+                pic.style.backgroundImage = `url("${user.profilePic}")`;
+                pic.style.backgroundSize = 'cover';
+                pic.style.backgroundPosition = 'center';
+            } else {
+                pic.style.backgroundImage = '';
+            }
+
       button.addEventListener('click', () => {
         const me = getCurrentUserId();
         if (me === null) return;
 
         const chat = getOrCreateChat(me, user.id);
         activeChatId = chat.id;
-
+        setTopBar(user.username, 'Online', user.id, false);
         renderMessages();
         render(); 
       });
@@ -336,7 +378,9 @@ function render() {
     info.appendChild(name);
     info.appendChild(badge);
 
-    button.appendChild(pic);
+    if (item.type !== 'group') {
+        button.appendChild(pic);
+    }
     button.appendChild(info);
 
     chatList.appendChild(button);
@@ -385,6 +429,7 @@ sendBtn.addEventListener('click', () => {
 //Check that it updates when users go offline
 window.addEventListener('storage', (event) => {
   if (event.key === USERS_KEY || event.key === CHATS_KEY|| event.key === MESSAGES_KEY) {
+    renderAccountPic();
     render();
     renderMessages();
   }
@@ -394,6 +439,7 @@ window.addEventListener('storage', (event) => {
 function init(){
     const defaultTab = document.getElementById('active');
     
+    renderAccountPic();
     render();
     renderMessages();
 }

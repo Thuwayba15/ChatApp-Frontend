@@ -96,6 +96,7 @@ form.addEventListener('submit', (event) => {
         email: email,
         password: hashPassword(password),
         isOnline: false,
+        profilePic: '',
     }
 
     //Add to users list
@@ -110,7 +111,7 @@ form.addEventListener('submit', (event) => {
         String(newUser.id)
     );
 
-    window.location.href = '../index.html';
+    window.location.href = '../pages/login.html';
 
 })
 
