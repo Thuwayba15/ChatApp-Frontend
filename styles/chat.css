@@ -221,7 +221,14 @@ body {
 
 .chat-list-item-badge {
     font-size: 12px;
+}
+
+.badge-online {
     color: #64ff50;
+}
+
+.badge-offline {
+    color: #ff0000;
 }
 
 .chat-list-empty {
