@@ -1,13 +1,16 @@
+//Storage key for all users + current user
 const USERS_KEY = "chat-o.users";
 const CURRENT_USER_KEY = "chat-o.current-user";
 
+//Storage keys for chats and messages
 const CHATS_KEY = "chat-o.chats";
 const MESSAGES_KEY = "chat-o.messages";
 
+//storage keys for chat IDs and message IDs
 const NEXT_CHAT_ID_KEY = "chat-o.nextChatId";
 const NEXT_MESSAGE_ID_KEY = "chat-o.nextMessageId";
 
-//Listing in sidebar
+//Where the three different tabs will be rendered
 const chatList = document.getElementById('chatList');
 const empty = document.getElementById('chatListEmpty');
 const tabs = document.getElementById('tabs');
@@ -20,7 +23,7 @@ const sendBtn = document.getElementById('send-btn');
 //make sure only logged in users can see index
 const current = sessionStorage.getItem(CURRENT_USER_KEY);
 if(!current){
-    window.location.href = '../pages/login.html';
+    window.location.href = 'ChatApp-Frontend/pages/login.html';
 }
 
 //Set default tab to be selected
@@ -28,11 +31,13 @@ let activeTab = 'all';
 //Keep track of chat that is currently open
 let activeChatId = null;
 
+//Load an return users from local storage
 function loadUsers() {
   const raw = localStorage.getItem(USERS_KEY);
   if (!raw) return [];
   return JSON.parse(raw);
 }
+
 
 function saveUsers(users) {
   localStorage.setItem(USERS_KEY, JSON.stringify(users));
