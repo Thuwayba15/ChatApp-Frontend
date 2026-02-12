@@ -1,0 +1,628 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #3f4370;
+    height: 100%;
+}
+
+@font-face {
+    font-family: "Chicle";
+    src: url("../assets/fonts/Chicle-Regular.ttf") format("truetype");
+    font-style: normal;
+}
+
+.app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* top bar */
+.top {
+    background-color: #424874;
+    height: 80px;
+    color: white;
+    display: grid;
+    align-items: center;
+    padding: 0px 10px;
+    gap: 16px;
+    grid-template-columns: 300px 1fr auto;
+
+}
+
+.logo {
+    font-family: "Chicle";
+    font-size: 50px;
+    font-weight: 100;
+    color: #ffeb50;
+    display: flex;
+    align-items: center;
+}
+
+.user {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.user-pic {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: white;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.user-name {
+    font-size: 18px;
+}
+
+.user-status {
+    font-size: 12px;
+    color: #64ff50;
+}
+
+.account-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.account-pic{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: block;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* bottom section */
+.bottom {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    min-height: 0;
+}
+
+/* left sidebar */
+.sidebar {
+    background-color: #323866;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.sidebar-header {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.sidebar-title{
+    color: white;
+}
+
+.sidebar-search {
+    position: relative;
+}
+
+.sidebar-search input {
+    background-color: #f0f2d3; 
+    width: 100%;
+    height: 25px;
+    padding: 8px 30px 8px 10px;
+    border-radius: 20px;
+    border: none;
+}
+
+.search-icon {
+    position: absolute;
+    left: 85%;
+    top: 12%;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: #000000;
+    
+}
+
+/* tabs */
+.tabs {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+
+}
+
+.filter-options {
+    color: white;
+    background-color: black;
+    border-radius: 999px;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    
+}
+
+.tab {
+    border: none;
+    background: transparent;
+    color: white;
+
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.tab.active {
+    background-color: #322f2f;
+    color: white;
+}
+
+.tab-group {
+    background: transparent;
+    width: 50px;
+    height: 50px;
+    font-size: 40px;
+    color:rgb(240, 242, 211);
+    border: none;
+}
+
+/* people */
+
+.chat-list {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: 5px;
+    gap: 10px;
+}
+
+.chat-list-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 250px;
+    background-color: #322f2f;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    height: 60px;
+}
+
+.chat-list-item-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    padding: 10px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.chat-list-item-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 2px;
+    flex-direction: column;
+}
+
+.chat-list-item-name {
+    font-size: 19px;
+}
+
+.chat-list-item-badge {
+    font-size: 12px;
+}
+
+.badge-online {
+    color: #64ff50;
+}
+
+.badge-offline {
+    color: #ff0000;
+}
+
+.chat-list-empty {
+    color: white;
+}
+
+.chat-list-item-active {
+    background-color: #514e4e;
+    color: white;
+}
+
+.chat-list-item-group .chat-list-item-pic {
+    display: none;
+}
+
+.chat-list-item-group {
+    padding-left: 12px;
+}
+
+
+/* right chat section */
+.chat {
+    background-image:
+    linear-gradient(rgba(240, 242, 211, 0.9), rgba(240, 242, 211, 0.9)),
+    url('../assets/img/chat_background.avif');
+    background-size: cover;
+    background-color: #f0f2d3;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.messages {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.msg-in {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: flex-start;
+    gap: 4px;
+    max-width: 60%;
+    
+}
+
+.msg-out {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    align-self: flex-end;
+    gap: 4px;
+    max-width: 60%;
+}
+
+.msg-sender {
+    font-weight: bold;
+
+}
+
+.msg-content {
+    background-color: #322f2f;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    /* keep new lines and wrap text AND break very long words */
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.msg-time {
+    font-size: 12px;
+}
+
+.input {
+    display: flex;
+    align-items:center;
+    gap: 10px;
+    padding: 10px;
+    background-color: black;
+    border: none;
+    border-radius: 10px;
+    min-width: 80%;
+    max-height: 7%;
+    align-self: center;
+    margin-bottom: 10px;
+}
+
+.msg-input {
+    border: none;
+    background-color: black;
+    color: white;
+    padding: 2px;
+    flex: 1;
+    max-height: 100%;
+    overflow: auto;
+    resize: none;
+}
+
+.format-button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    display: flex;
+    align-self: flex-end;
+}
+
+.send-button {
+    background-color: transparent;
+    border: none;
+    color: #ffeb50;
+    font-size: 18px;
+}
+
+/* Modal overlay */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 999;
+}
+
+.modal-overlay[hidden] {
+    display: none;
+}
+
+
+.modal {
+    width: 100%;
+    max-width: 720px;
+    background-color: #323866;
+    border-radius: 28px;
+    padding: 35px;
+    color: white;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: 80vh;
+    overflow: hidden;
+}
+
+.modal-title {
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.modal-groupname {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+
+.modal-label {
+    font-size: 12px;
+    opacity: 0.9;
+
+}
+
+.modal-input {
+    height: 40px;
+    border-radius: 10px;
+    width: 40%;
+    border: none;
+    padding: 0 12px;
+    outline: none;
+    background-color:#f0f2d3;
+}
+
+.modal-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.modal-tabs {
+    background: #0f0f12;
+    border-radius: 999px;
+    padding: 6px;
+    display: flex;
+    gap: 6px;
+}
+
+.modal-tab {
+    border: none;
+    background: transparent;
+    color: white;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.modal-tab.active {
+    background-color: #322f2f;
+    color: white;
+}
+
+.modal-search {
+    position: relative;
+}
+
+.modal-search input {
+    background-color: #f0f2d3; 
+    width: 100%;
+    height: 25%;
+    padding: 8px 30px 8px 10px;
+    border-radius: 20px;
+    border: none;
+}
+
+.search-icon {
+    position: absolute;
+    left: 85%;
+    top: 12%;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: #000000;
+}
+
+/* User list area */
+.modal-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+}
+
+/* Each row */
+.modal-user-list {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 6px;
+    margin-top: 8px;
+}
+
+.modal-row-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-row-pic {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: white;
+}
+
+.modal-row-name {
+    font-weight: 600;
+    font-size: 14px;
+}
+.modal-row {
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Add/Remove button */
+.modal-row-btn {
+  height: 30px;
+  min-width: 72px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: #f0f2d3;
+}
+
+.modal-row-btn-remove {
+  background-color:#272b4b;
+}
+
+/* Footer buttons */
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.modal-button {
+    background-color:#f0f2d3;
+    height: 34px;
+    min-width: 96px;
+    border-radius: 6px;
+    border: none;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .modal {
+    max-width: 100%;
+    min-height: 520px;
+  }
+
+  .modal-search input {
+    width: 140px;
+  }
+}
+
+
+
+
+
+@media (max-width: 900px) {
+
+    .top {
+        grid-template-columns: 150px 1fr auto;
+    }
+
+    .logo {
+    font-size: 40px;
+    }
+
+    .user {
+        align-items:flex-start;
+    }
+
+    .bottom {
+        /* collapses side-by-side columns into one */
+        grid-template-columns: 1fr; 
+        /* how vertical space is shared; the top element only takes up what it needs and the bottom stretches */
+        grid-template-rows: auto 1fr;
+    }
+
+    .sidebar {
+        height: auto;
+        max-height: 42vh;
+        overflow: auto;
+        align-items: center;
+    }
+
+    .chat-list {
+        flex-direction: row;
+        overflow: auto;
+
+    }
+
+    .chat-list-item {
+        width: 150px;
+    }
+
+    .input {
+        max-height: 10%;
+    }
+
+    .modal {
+        max-width: 100%;
+        min-height: 520px;
+    }
+
+  .modal-search input {
+    width: 140px;
+  }
+
+
+
+}
