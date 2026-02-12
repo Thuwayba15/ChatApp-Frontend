@@ -16,8 +16,8 @@
                 <div class="user-pic" id="top-user-pic"></div>
 
                 <div class="user-info">
-                    <div class="user-name" id="top-user-name">Username</div>
-                    <div class="user-status" id="top-user-status">Online</div>
+                    <div class="user-name" id="top-user-name"></div>
+                    <div class="user-status" id="top-user-status"></div>
                 </div>
              </div>
 
@@ -82,6 +82,41 @@
             </main>
         </div>
     </div>
+
+    <!-- Create group overlay -->
+     <div class="modal-overlay" id="groupModal" hidden>
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Select Users</h2>
+            </div>
+
+            <div class="modal-groupname">
+                <label class="modal-label" for="groupName">Group Name</label>
+                <input id="groupName" class="modal-input" type="text" placeholder="Enter group name"/>
+            </div>
+
+            <div class="modal-controls">
+                <div class="modal-tabs">
+                    <button class="modal-tab active" type="button" id="modal-all">All Users</button>
+                    <button class="modal-tab" type="button" id="modal-online">Online Users</button>
+                </div>
+
+                <div class="modal-search">
+                    <input type="search" placeholder="Search"/>
+                    <span class="search-icon"></span>
+                </div>
+            </div>
+
+            <div class="modal-user-list" id="groupUserList">
+                <!-- list of users -->
+            </div>
+
+            <div class="modal-footer">
+                <button class="modal-button" id="cancelGroupBtn" type="button">Cancel</button>
+                <button class="modal-button" id="createGroupBtn" type="button">Create Group</button>  
+            </div>    
+        </div>
+     </div>
 
     <script src="./js/sidebar.js"></script>
 </body>
