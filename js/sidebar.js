@@ -69,6 +69,12 @@ function getCurrentUserId() {
 function setTopBar(name, statusText) {
     if (topUserName) topUserName.textContent = name;
     if (topUserStatus) topUserStatus.textContent = statusText;
+
+    if(statusText === 'Group' || activeChatId === null) {
+        topUserPic.style.display = 'none';
+    } else {
+        topUserPic.style.display = '';
+    }
 }
 
 //Chat functions
@@ -544,7 +550,7 @@ window.addEventListener('storage', (event) => {
 //Initial setup for first render
 function init(){
     const defaultTab = document.getElementById('active');
-    
+    topUserPic.style.display = 'none';
     render();
     renderMessages();
 }
