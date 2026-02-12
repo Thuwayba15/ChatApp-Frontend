@@ -115,7 +115,7 @@ if (doneButton) {
 
     user.username = nextName;
     saveUsers(users);
-    window.location.href = './pages/home.html';
+    window.location.href = '../pages/home.html';
   });
 }
 
