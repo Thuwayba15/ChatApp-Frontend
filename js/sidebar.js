@@ -23,7 +23,7 @@ const sendBtn = document.getElementById('send-btn');
 //make sure only logged in users can see index
 const current = sessionStorage.getItem(CURRENT_USER_KEY);
 if(!current){
-    window.location.href = 'ChatApp-Frontend/pages/login.html';
+    window.location.href = '/ChatApp-Frontend/pages/login.html';
 }
 
 //Set default tab to be selected
