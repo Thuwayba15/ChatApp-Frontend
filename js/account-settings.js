@@ -3,9 +3,9 @@
 const CURRENT_USER_KEY = 'chat-o.current-user';
 const USERS_KEY = 'chat-o.users';
 
-const cancelButton = document.getElementById('cancel-button');
-const saveButton = document.getElementById('save-button');
-const userName = document.getElementById('userName');
+const doneButton = document.getElementById('done-button');
+const userNameInput = document.getElementById('userNameInput');
+const editNameButton = document.getElementById('editName');
 const userIcon = document.getElementById('userIcon');
 const editIconButton = document.getElementById('editIcon');
 const profilePicInput = document.getElementById('profilePicInput');
@@ -17,9 +17,9 @@ function renderCurrentUserName() {
   const users = loadUsers();
   const user = users.find((u) => u.id === me);
 
-  if (!user || !userName) return;
+  if (!user || !userNameInput) return;
 
-  userName.textContent = user.username; 
+  userNameInput.value = user.username; 
 }
 
 function renderCurrentUserIcon() {
@@ -80,32 +80,16 @@ logoutButton.addEventListener('click', () => {
 
 
 
-cancelButton.addEventListener('click', () => {
-  window.location.href = '../index.html';
-});
-
-if (saveButton) {
-  saveButton.addEventListener('click', () => {
-    window.location.href = '../index.html';
+if (editNameButton && userNameInput) {
+  editNameButton.addEventListener('click', () => {
+    userNameInput.readOnly = false;
+    userNameInput.focus();
+    userNameInput.select();
   });
 }
 
-if (editIconButton && profilePicInput) {
-  editIconButton.addEventListener('click', () => {
-    profilePicInput.click();
-});
-
-profilePicInput.addEventListener('change', (event) => {
-  const file = event.target.files[0];
-  if (!file) return;
-
-  if (!file.type.startsWith('image/')) {
-    alert('Please select an image file');
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = () => {
+if (doneButton) {
+  doneButton.addEventListener('click', () => {
     const me = getCurrentUserId();
     if (me === null) return;
 
@@ -113,12 +97,56 @@ profilePicInput.addEventListener('change', (event) => {
     const user = users.find((u) => u.id === me);
     if (!user) return;
 
-    user.profilePic = reader.result;
-    saveUsers(users);
-    renderCurrentUserIcon();
-  };
+    const nextName = userNameInput ? userNameInput.value.trim() : '';
 
-  reader.readAsDataURL(file);
-  
+    if (!nextName) {
+      alert('Username cannot be empty');
+      return;
+    }
+
+    const exists = users.some((u) =>
+      u.id !== me && u.username.toLowerCase() === nextName.toLowerCase()
+    );
+
+    if (exists) {
+      alert('Username already exists');
+      return;
+    }
+
+    user.username = nextName;
+    saveUsers(users);
+    window.location.href = '../index.html';
+  });
+}
+
+if (editIconButton && profilePicInput) {
+  editIconButton.addEventListener('click', () => {
+    profilePicInput.click();
+  });
+
+  profilePicInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const me = getCurrentUserId();
+      if (me === null) return;
+
+      const users = loadUsers();
+      const user = users.find((u) => u.id === me);
+      if (!user) return;
+
+      user.profilePic = reader.result;
+      saveUsers(users);
+      renderCurrentUserIcon();
+    };
+
+    reader.readAsDataURL(file);
   });
 }
