@@ -31,18 +31,19 @@ let activeTab = 'all';
 //Keep track of chat that is currently open
 let activeChatId = null;
 
-//Load an return users from local storage
+//Load and return users from local storage
 function loadUsers() {
   const raw = localStorage.getItem(USERS_KEY);
   if (!raw) return [];
   return JSON.parse(raw);
 }
 
-
+//Save users to local storage array
 function saveUsers(users) {
   localStorage.setItem(USERS_KEY, JSON.stringify(users));
 }
 
+//Return logged in user from session storage
 function getCurrentUserId() {
   const raw = sessionStorage.getItem(CURRENT_USER_KEY);
   if (!raw) return null;
@@ -50,16 +51,20 @@ function getCurrentUserId() {
 }
 
 //Chat functions
+
+//Load and return chats from local storage
 function loadChats() {
     const raw = localStorage.getItem(CHATS_KEY);
     if (!raw) return [];
     return JSON.parse(raw);
 }
 
+//Save chats to local storage array
 function saveChats(chats) {
     localStorage.setItem(CHATS_KEY, JSON.stringify(chats));
 }
 
+//Read next id from local storage, add 1 and return
 function getNextChatId() {
     const raw = localStorage.getItem(NEXT_CHAT_ID_KEY);
     const current = raw ? Number(raw) : 1;
@@ -67,6 +72,8 @@ function getNextChatId() {
     return current;
 }
 
+//Get a chat between two users or create it
+//Load the chats, find 'direct' chats with us, return or create, save to chats array
 function getOrCreateChat(me, you){
     const chats = loadChats();
 
@@ -93,16 +100,19 @@ function getOrCreateChat(me, you){
 
 //Message functions
 
+//Load and return messages from local storage
 function loadMessages() {
     const raw = localStorage.getItem(MESSAGES_KEY);
     if (!raw) return [];
     return JSON.parse(raw);
 }
 
+//Save messages to local storage array
 function saveMessages(messages) {
     localStorage.setItem(MESSAGES_KEY, JSON.stringify(messages));
 }
 
+//Read next id from local storage, add 1 and return
 function getNextMessageId() {
     const raw = localStorage.getItem(NEXT_MESSAGE_ID_KEY);
     const current = raw ? Number(raw) : 1;
@@ -110,6 +120,7 @@ function getNextMessageId() {
     return current;
 }
 
+//Load messages and chats, create a message object, push to array and save, find chat by chatId, update timestamp
 function sendMessage(chatId, senderId, content) {
     const messages = loadMessages();
     const chats = loadChats();
@@ -132,38 +143,7 @@ function sendMessage(chatId, senderId, content) {
     }
 }
 
-function getVisibleUsers(users) {
-    const me = getCurrentUserId();
-
-    const notMe = users.filter((u) =>
-    u.id !== me);
-
-    //Filter by tabs
-    if(activeTab === 'online') {
-        return notMe.filter((u) =>
-        u.isOnline === true)
-    }
-
-    //COME BACK TO THIS
-    if(activeTab === 'groups'){
-        return [];
-    }
-
-    return notMe;
-}
-
-function getAllChatsVisibleUsers(){
-    const me = getCurrentUserId();
-    if(me === null) return [];
-
-    const chats = loadChats()
-     .filter((c) => c.type === 'direct' && c.members.includes(me))
-     .sort((a,b) => b.timeStamp - a.timeStamp);
-
-    const users = chats.map((c) => c.members.find((id) => id !== me));
-    return users.map((id) => loadUsers().find((u) => u.id === id)).filter((u) => u !== undefined);
-}
-
+//See who is online by loading users besides me, where isOnline is true
 function getOnlineVisibleUsers() {
     const me = getCurrentUserId();
 
@@ -171,6 +151,9 @@ function getOnlineVisibleUsers() {
         .filter((u) => u.id !== me && u.isOnline === true);
 }
 
+//Create a sidebar item that represents a chat
+//Get current user ID, load all chats that include me, sort by timestamp,
+//map each chat into one sidebar item (direct: find user that is not me, clean up to only return info we need)
 function getAllChatsSidebarItems(){
     const me = getCurrentUserId();
     if(me === null) return [];
@@ -195,6 +178,11 @@ function getAllChatsSidebarItems(){
         }
     })
 }
+
+//Render the actual messages
+//clear so i tonly shows new, if no activeChatId stop, load messages and filter by current chat,
+//sort by timestamp, check if group, for each message:
+//create div for in or out, if its a group AND incoming, show username, add content and append to messages container
 function renderMessages() {
     const me = getCurrentUserId();
     messages.innerHTML = '';
@@ -226,6 +214,7 @@ function renderMessages() {
 
         const time = document.createElement('div');
         time.className = 'msg-time';
+        //Format time according to locale, hours and mins only
         time.textContent = new Date(message.timeStamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
         msgDiv.appendChild(content);
@@ -237,63 +226,64 @@ function renderMessages() {
     messages.scrollTop = messages.scrollHeight;
 }
 
+//Renders the items in sidebar
+//Clear so only shows new, if statement for which tab is active, set userPick for online users
+//For each item, create a button with dp, name, badge
+// if it's direct, badge is online or offline, if userPick, opens chats and sets activeChatId
 function render() {
-  chatList.innerHTML = "";
+    chatList.innerHTML = '';
 
-  let items = [];
+    let items = [];
 
-  if (activeTab === 'online') {
-    // online tab shows USERS (not chats)
-    items = getOnlineVisibleUsers().map((u) => ({
-      type: 'userPick',
-      user: u,
-    }));
-  } else if (activeTab === 'all') {
-    // all tab shows DIRECT + GROUP chats
-    items = getAllChatsSidebarItems();
-  } else if (activeTab === 'groups') {
-    // groups tab shows only group chats 
-    items = getAllChatsSidebarItems().filter((i) => i.type === "group");
-  }
+    if (activeTab === 'online') {
+        items = getOnlineVisibleUsers().map((u) => ({
+        type: 'userPick',
+        user: u,
+        }));
+    } else if (activeTab === 'all') {
+        items = getAllChatsSidebarItems();
+    } else if (activeTab === 'groups') { 
+        items = getAllChatsSidebarItems().filter((i) => i.type === "group");
+    }
 
-  if (items.length === 0) {
-    empty.hidden = false;
-    return;
-  }
+    if (items.length === 0) {
+        empty.hidden = false;
+        return;
+    }
 
-  empty.hidden = true;
+    empty.hidden = true;
 
-  for (const item of items) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'chat-list-item';
+    for (const item of items) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'chat-list-item';
 
-    const pic = document.createElement('div');
-    pic.className = 'chat-list-item-pic';
+        const pic = document.createElement('div');
+        pic.className = 'chat-list-item-pic';
 
-    const info = document.createElement('div');
-    info.className = 'chat-list-item-info';
+        const info = document.createElement('div');
+        info.className = 'chat-list-item-info';
 
-    const name = document.createElement('span');
-    name.className = 'chat-list-item-name';
+        const name = document.createElement('span');
+        name.className = 'chat-list-item-name';
 
-    const badge = document.createElement('span');
-    badge.className = 'chat-list-item-badge';
+        const badge = document.createElement('span');
+        badge.className = 'chat-list-item-badge';
 
-    if (item.type === 'direct') {
-      name.textContent = item.user.username;
+        if (item.type === 'direct') {
+            name.textContent = item.user.username;
 
-      if (item.user.isOnline) {
-        badge.textContent = 'Online';
-        badge.classList.add('badge-online');
-      } else {
-        badge.textContent = 'Offline';
-        badge.classList.add('badge-offline'); 
-      }
+        if (item.user.isOnline) {
+            badge.textContent = 'Online';
+            badge.classList.add('badge-online');
+        } else {
+            badge.textContent = 'Offline';
+            badge.classList.add('badge-offline'); 
+        }
 
-      button.addEventListener('click', () => {
-        activeChatId = item.chatId;
-        renderMessages();
+        button.addEventListener('click', () => {
+            activeChatId = item.chatId;
+            renderMessages();
       });
     }
 
@@ -307,13 +297,12 @@ function render() {
       });
     }
 
-    // Online tab: clicking a user should create/open direct chat
     if (item.type === 'userPick') {
       const user = item.user;
       name.textContent = user.username;
 
       badge.textContent = 'Online';
-      badge.classList.add('badge--online');
+      badge.classList.add('badge-online');
 
       button.addEventListener('click', () => {
         const me = getCurrentUserId();
@@ -323,7 +312,7 @@ function render() {
         activeChatId = chat.id;
 
         renderMessages();
-        render(); // refresh sidebar ordering
+        render(); 
       });
     }
 
@@ -337,11 +326,12 @@ function render() {
   }
 }
 
-
+//Handle switching between tabs, detects which is clicked and sets active class, calls render
 tabs.addEventListener('click', (event) => {
     const clicked = event.target.closest('button');
     if(!clicked) return;
 
+    //COME BACK
     if(clicked.id === 'add') return;
 
     if (clicked.id !== "all" && clicked.id !== "groups" && clicked.id !== "online") {
@@ -357,6 +347,7 @@ tabs.addEventListener('click', (event) => {
     render();
 });
 
+//Handle sending a message, sends typed message, clears input after, renders messages
 sendBtn.addEventListener('click', () => {
     const me = getCurrentUserId();
     if(me === null) return;
@@ -382,8 +373,9 @@ window.addEventListener('storage', (event) => {
   }
 });
 
+//Initial setup for first render
 function init(){
-    const defalt = document.getElementById('active');
+    const defaultTab = document.getElementById('active');
     
     render();
     renderMessages();
