@@ -1,8 +1,88 @@
 <!DOCTYPE html>
 <head>
     <title>Chat-O Messages</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/chat.css">
 </head>
 <body>
-    <h1>Messages Page</h1>
+    <!-- All components -->
+    <div class="app">
+        <!-- Top bar -->
+        <header class="top">
+            <!-- logo, username, user pic, account button -->
+             <div class="logo">CHAT-O</div>
+
+             <div class="user">
+                <div class="user-pic" id="top-user-pic"></div>
+
+                <div class="user-info">
+                    <div class="user-name" id="top-user-name">Username</div>
+                    <div class="user-status" id="top-user-status">Online</div>
+                </div>
+             </div>
+
+             <button class="account-button" type="button">
+                <span class="account-pic"></span>
+             </button>
+             
+        </header>
+
+        <!--  side bar and chat section -->
+        <div class="bottom">
+
+            <!--  left sidebar -->
+            <aside class="sidebar">
+
+                <!-- messages and search -->
+                <div class="sidebar-header">
+                     <div class="sidebar-title">Messages</div>
+
+                     <div class="sidebar-search">
+                        <input type="search" placeholder="Search"/>
+                        <span class="search-icon"></span>
+                     </div>
+                </div>
+
+                <!-- filter tabs -->
+                <div class="tabs" id="tabs">
+                    <div class="filter-options">
+                        <button class="tab active" type="button" id="all">All Chats</button>
+                        <button class="tab" type="button" id="groups">Groups</button>
+                        <button class="tab" type="button" id="online">Online Users</button>
+                    </div>
+                    <button class="tab-group" type="button" id="add">+</button>
+                </div>
+
+                <!-- chat list section -->
+                <div class="chat-list" id="chatList">
+                    <!-- users, profile pic, username, online (typing later), groups -->
+                    
+                </div>
+
+                <div class="chat-list-empty" id="chatListEmpty" hidden>
+                    No users to show.
+                </div>
+
+            </aside>
+
+            <!-- right side chat section -->
+            <main class="chat">
+                <section class="messages" id="messages">
+                    <!-- incoming and outgoing messages with time and member name for group -->
+                </section>
+
+                <section class="input">
+                    <!-- add message input and send button, B and I later -->
+                     <textarea class="msg-input" id="msg-input" placeholder="Message..." rows="1"></textarea>
+
+                     <button class="format-button" type="button">B</button>
+                     <button class="format-button" type="button">I</button>
+                     <button class="send-button" id="send-btn" type="button">➤</button>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="./js/sidebar.js"></script>
 </body>
 </html>

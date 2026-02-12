@@ -20,6 +20,11 @@ function loadUsers() {
     return JSON.parse(raw);
 }
 
+//Save users to local storage
+function saveUsers(users) {
+    localStorage.setItem(USERS_KEY, JSON.stringify(users));
+}
+
 form.addEventListener('submit', (event) => {
     event.preventDefault();
 
@@ -51,8 +56,13 @@ form.addEventListener('submit', (event) => {
         return;
     }
 
-    //Local storage
-    localStorage.setItem(CURRENT_USER_KEY, String(matchedUser.id));
+    //Online once logged in, save to update
+    matchedUser.isOnline = true;
+    console.log(matchedUser);
+    saveUsers(users);
+
+    //Session storage
+    sessionStorage.setItem(CURRENT_USER_KEY, String(matchedUser.id));
 
     //Go to home page
     window.location.href = '../index.html';

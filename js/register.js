@@ -65,8 +65,16 @@ form.addEventListener('submit', (event) => {
     const usernameExists = users.some ( (user) => 
         user.username.toLowerCase() === username.toLowerCase());
 
+    const emailExists = users.some ( (user) => 
+        user.email.toLowerCase() === email.toLowerCase());
+
     if(usernameExists){
         alert('Username already exists');
+        return;
+    }
+
+    if(emailExists){
+        alert('Email already exists');
         return;
     }
 
@@ -76,6 +84,7 @@ form.addEventListener('submit', (event) => {
         username: username,
         email: email,
         password: password,
+        isOnline: false,
     }
 
     //Add to users list
